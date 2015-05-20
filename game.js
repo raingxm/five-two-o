@@ -18,7 +18,7 @@
 
     Game.prototype = {
         update: function() {
-            console.log('hello');
+            console.log('Love forever');
         },
         draw: function(scrren, size) {
 
