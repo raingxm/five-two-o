@@ -11,16 +11,17 @@
         var tick = function() {
             self.update();
             self.draw(screen, size);
+            requestAnimationFrame(tick);
         }
         tick();
     }
 
     Game.prototype = {
         update: function() {
-
+            console.log('hello');
         },
         draw: function(scrren, size) {
-            console.log('hello');
+
         }
     };
 
