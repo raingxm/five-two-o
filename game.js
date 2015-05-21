@@ -51,7 +51,7 @@
             }
 
             if(this.keyborder.isDown(this.keyborder.KEYS.SPACE)) {
-                var bullet = new Bullet({x: this.center.x - this.size.x/2, y: this.center.y - this.size.x},
+                var bullet = new Bullet({x: this.center.x, y: this.center.y },
                     {x: 0, y: -6});
                 this.game.addBody(bullet);
             }
