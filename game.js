@@ -20,6 +20,14 @@
 
     Game.prototype = {
         update: function() {
+            var bodies = this.bodies;
+            var notCollidingWithAnything = function(b1) {
+                return bodies.filter(function(b2) {
+                    return colliding(b1, b2);
+                }).length === 0;
+            };
+
+            this.bodies = this.bodies.filter(notCollidingWithAnything);
             for(var i = 0; i < this.bodies.length; i++) {
                 this.bodies[i].update();
             }
@@ -51,7 +59,7 @@
             }
 
             if(this.keyborder.isDown(this.keyborder.KEYS.SPACE)) {
-                var bullet = new Bullet({x: this.center.x, y: this.center.y },
+                var bullet = new Bullet({x: this.center.x, y: this.center.y - this.size.x },
                     {x: 0, y: -6});
                 this.game.addBody(bullet);
             }
@@ -101,6 +109,14 @@
             invaders.push(new Invader(game, {x: x, y: y}));
         }
         return invaders;
+    };
+
+    var colliding = function(b1, b2) {
+      return !( b1 === b2 ||
+                b1.center.x + b1.size.x / 2 < b2.center.x - b2.size.x / 2 ||
+                b1.center.y + b1.size.y / 2 < b2.center.y - b2.size.y / 2 ||
+                b1.center.x + b1.size.x / 2 > b2.center.x - b2.size.x / 2 ||
+                b1.center.y + b1.size.y / 2 > b2.center.y - b2.size.y / 2);
     };
 
     var KeyBoarder = function() {
