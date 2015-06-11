@@ -107,11 +107,17 @@
             this.center.x += this.speedX;
             this.patrolX += this.speedX;
 
-            if(Math.random() > 0.995 ) {
+            if(Math.random() > 0.95 && !this.hasBelowInvaders()) {
                 var bullet = new Bullet({x: this.center.x, y: this.center.y + this.size.x },
                     {x: Math.random() - 0.5, y: 2});
                 this.game.addBody(bullet);
             }
+        },
+        hasBelowInvaders: function() {
+            var that = this;
+            return this.game.bodies.filter(function(invader) {
+              return that.center.y < invader.center.y && Math.abs(that.center.x - invader.center.x) < that.size.x;
+            }).length > 0;
         }
     };
 
