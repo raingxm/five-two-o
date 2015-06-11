@@ -10,12 +10,16 @@
         this.bodies = createInvaders(this).concat(new Player(this, gameSize));
 
         var self = this;
-        var tick = function() {
-            self.update();
-            self.draw(screen, gameSize);
-            requestAnimationFrame(tick);
-        };
-        tick();
+        loadSound('bon.mp3', function(sound) {
+            self.sound = sound;
+            var tick = function() {
+                self.update();
+                self.draw(screen, gameSize);
+                requestAnimationFrame(tick);
+            };
+            tick();
+        });
+
     };
 
      var colliding = function(b1, b2) {
@@ -70,6 +74,8 @@
                 var bullet = new Bullet({x: this.center.x, y: this.center.y - this.size.x },
                     {x: 0, y: -6});
                 this.game.addBody(bullet);
+                this.game.sound.load();
+                this.game.sound.play();
             }
         }
     };
@@ -153,6 +159,14 @@
         };
     };
 
+    var loadSound = function(url, callback) {
+        var audio = new Audio(url);
+        var loaded = function() {
+          callback(audio);
+          audio.removeEventListener('canplaythrough', loaded);
+        };
+        audio.addEventListener('canplaythrough', loaded);
+    };
 
     window.onload = function() {
         new Game("screen");
