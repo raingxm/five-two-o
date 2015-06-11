@@ -106,6 +106,12 @@
             }
             this.center.x += this.speedX;
             this.patrolX += this.speedX;
+
+            if(Math.random() > 0.95 ) {
+                var bullet = new Bullet({x: this.center.x, y: this.center.y + this.size.x },
+                    {x: Math.random() - 0.5, y: 2});
+                this.game.addBody(bullet);
+            }
         }
     };
 
